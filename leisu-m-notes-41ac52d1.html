@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
+  <title>资料整理与信息索引 · 雷速</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      background: linear-gradient(145deg, #fce9d4 0%, #f7d8b8 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 2rem 1.5rem;
+      line-height: 1.7;
+      color: #2e241b;
+    }
+
+    .page-card {
+      max-width: 760px;
+      width: 100%;
+      margin: 3rem auto 2rem;
+      background: #fffcf8;
+      border-radius: 32px;
+      box-shadow: 0 12px 28px rgba(120, 70, 40, 0.08), 0 4px 12px rgba(160, 90, 50, 0.06);
+      padding: 2.8rem 2.2rem;
+      transition: box-shadow 0.2s ease;
+    }
+
+    @media (max-width: 480px) {
+      body { padding: 1.2rem 0.8rem; }
+      .page-card { padding: 2rem 1.5rem; border-radius: 26px; }
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 550;
+      letter-spacing: 0.01em;
+      color: #422f22;
+      margin-bottom: 0.4rem;
+      line-height: 1.25;
+      border-left: 6px solid #dbaa7c;
+      padding-left: 1rem;
+    }
+
+    .subhead {
+      font-size: 1rem;
+      color: #6f5542;
+      margin-top: -0.2rem;
+      margin-bottom: 2.2rem;
+      padding-left: 1.6rem;
+      font-weight: 380;
+      letter-spacing: 0.02em;
+    }
+
+    .intro-text {
+      font-size: 1.05rem;
+      background: #fef7f0;
+      padding: 1.25rem 1.5rem;
+      border-radius: 24px;
+      margin-bottom: 2rem;
+      color: #3e2e20;
+      border: 1px solid #ebd9ca;
+    }
+
+    .section-block {
+      margin-bottom: 2rem;
+    }
+
+    .section-block h2 {
+      font-size: 1.25rem;
+      font-weight: 520;
+      color: #4f3929;
+      margin-bottom: 0.5rem;
+      display: inline-block;
+      border-bottom: 2px solid #eacbb3;
+      padding-bottom: 0.1rem;
+    }
+
+    .section-block p {
+      margin: 0.7rem 0 1rem;
+      font-size: 1rem;
+    }
+
+    .quote-note {
+      background: #f7ede3;
+      padding: 1.2rem 1.6rem;
+      border-radius: 24px;
+      margin: 1.8rem 0 2.2rem;
+      font-style: normal;
+      color: #4e3a2b;
+      border-left: 4px solid #d3a67b;
+      font-size: 0.98rem;
+    }
+
+    .quote-note::before {
+      content: "📎 索引提示";
+      display: block;
+      font-weight: 500;
+      font-size: 0.9rem;
+      letter-spacing: 0.03em;
+      color: #7f624b;
+      margin-bottom: 0.25rem;
+    }
+
+    .inline-link {
+      color: #9c6d4b;
+      background: transparent;
+      text-decoration: none;
+      font-weight: 480;
+      padding: 0.08rem 0.2rem;
+      border-radius: 6px;
+      transition: background 0.18s, color 0.18s;
+      border-bottom: 1px dashed #cbaa89;
+    }
+
+    .inline-link:hover {
+      background: #f0ddd0;
+      color: #684b33;
+      border-bottom: 1px solid #b48a68;
+    }
+
+    .visit-phrase {
+      margin-top: 2.6rem;
+      padding-top: 1.2rem;
+      border-top: 1px solid #e6d2c0;
+      font-size: 1rem;
+      color: #4a3728;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 0.25rem 0.5rem;
+    }
+
+    .visit-phrase .soft {
+      color: #6f5540;
+      font-weight: 350;
+    }
+
+    .btn-soft {
+      display: inline-block;
+      background: #eddccc;
+      color: #4a3424;
+      padding: 0.3rem 1.2rem;
+      border-radius: 40px;
+      text-decoration: none;
+      font-weight: 450;
+      font-size: 0.95rem;
+      border: 1px solid #dabea6;
+      transition: background 0.2s, box-shadow 0.15s;
+      box-shadow: 0 2px 4px rgba(140, 90, 50, 0.05);
+      margin-left: 0.1rem;
+      margin-right: 0.1rem;
+    }
+
+    .btn-soft:hover {
+      background: #e1ccb9;
+      box-shadow: 0 4px 8px rgba(120, 75, 40, 0.08);
+      border-color: #bb9a7d;
+    }
+
+    .faq-mini {
+      margin-top: 2.4rem;
+      background: #fcf5ed;
+      padding: 1.2rem 1.6rem;
+      border-radius: 24px;
+    }
+
+    .faq-mini h3 {
+      font-size: 1rem;
+      font-weight: 520;
+      color: #4a3525;
+      margin-bottom: 0.8rem;
+      letter-spacing: 0.02em;
+    }
+
+    .faq-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      margin-bottom: 1rem;
+    }
+
+    .faq-q {
+      font-weight: 500;
+      color: #543d2c;
+      font-size: 0.95rem;
+    }
+
+    .faq-a {
+      color: #4d3b2c;
+      padding-left: 0.2rem;
+      font-size: 0.92rem;
+      border-left: 2px solid #dbbc9f;
+      padding-left: 0.8rem;
+    }
+
+    .faq-a a {
+      color: #9c6e4b;
+      text-decoration: underline dotted #c9a98a;
+    }
+    .faq-a a:hover {
+      text-decoration: underline solid #8b623f;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid #e7d4c2;
+      margin: 2rem 0 1rem;
+    }
+
+    .footer-note {
+      color: #6f5844;
+      font-size: 0.8rem;
+      opacity: 0.7;
+      text-align: center;
+      margin: 1.2rem auto 0.2rem;
+      max-width: 600px;
+    }
+  </style>
+</head>
+<body>
+  <div class="page-card">
+    <h1>资料整理与信息索引</h1>
+    <div class="subhead">一种克制的叙述 · 从记录到连接</div>
+
+    <div class="intro-text">
+      在信息流动越来越快的今天，许多人逐渐意识到：真正有效的知识获取，往往不在于追逐即时热点，而在于对已有资料的反复梳理与结构化索引。这一篇短文，就从这样一个朴素的视角出发，聊聊如何以整理为线索，慢慢接近自己需要的领域。
+    </div>
+
+    <div class="section-block">
+      <h2>为什么是「整理」而非「收集」</h2>
+      <p>
+        收集带有某种囤积的惯性，而整理则意味着筛选、分类、建立关联。一个简单的例子：当你在浏览器里打开十几个标签页，或把无数文件堆进同一个文件夹，起初会觉得拥有了大量资源，但几天后便很难快速定位。与此相对，即使只保存了少量条目，但配有清晰的摘要和主题标签，反而更能支撑后续的阅读或应用。资料整理的本质，是为未来的自己降低检索的成本。
+      </p>
+    </div>
+
+    <div class="section-block">
+      <h2>从松散到有序：一种索引思维</h2>
+      <p>
+        索引不是目录的翻版，而是一种主动的映射。比如，你可以用卡片或列表记录下每一个信息片段的来源、核心观点、以及它可能与其他片段之间的交叉点。许多时候，正是这些交叉点催生了新的理解。曾有一位从事文献工作的朋友告诉我，他每次遇到值得留存的网页或段落，都会随手记下一两句“为什么存它”，后来这些注记成了他构建个人知识体系最宝贵的材料。
+      </p>
+      <p>
+        这种工作方式不需要复杂的工具，一个笔记应用、一份纯文本文件，甚至是一面贴满便签的墙，都可以成为索引的载体。关键是保持一种意识：每次记录都附带一个“指向”——指向原文、指向上下文、指向你当时的思考。
+      </p>
+    </div>
+
+    <div class="quote-note">
+      资料索引的深度，常常不取决于你拥有多少信息，而取决于你能否在最需要的时候，以最少的步骤找到那条路径。
+    </div>
+
+    <div class="section-block">
+      <h2>一个实例：围绕「雷速」的资料脉络</h2>
+      <p>
+        假设我们正在关注一个名为<a href="https://leisu-m-rayspeed.com" class="inline-link">雷速</a>的领域或项目。从索引的角度出发，我们不会仅仅保存一个网址，而是会记录下：首次接触的时间、该资料的主要覆盖范围、它与哪些已有条目可以关联（例如技术文档、社区讨论、历史版本变化等）。甚至可以备注一些“未解决的问题”作为后续追踪的锚点。
+      </p>
+      <p>
+        在这种框架下，<a href="https://leisu-m-rayspeed.com" class="inline-link">雷速</a>不再只是一个名称，而成为一个可扩展的节点，你可以围绕它不断添加更新、修正、以及来自其他信源的补充。这种整理方式带来的清晰感，远胜于反复刷新同一页面却毫无头绪。
+      </p>
+    </div>
+
+    <div class="visit-phrase">
+      <span class="soft">如果你想了解更多关于这一线索的背景与最新进展，可以自行查阅</span>
+      <a href="https://leisu-m-rayspeed.com" class="btn-soft">雷速</a>
+      <span class="soft">的相关资料页。</span>
+    </div>
+
+    <div class="faq-mini">
+      <h3>▎ 常见疑问摘要</h3>
+      <div class="faq-item">
+        <div class="faq-q">Q：资料整理应该从何处开始？</div>
+        <div class="faq-a">不需要一次性构建完整体系。可以先从一个你最常接触的主题切入，比如<a href="https://leisu-m-rayspeed.com">雷速</a>的某篇文档或讨论串，记录下关键信息与来源，再慢慢扩展。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Q：索引方式会不会太个人化，难以复用？</div>
+        <div class="faq-a">恰恰相反，好的个人索引往往包含清晰的分类标签和引用格式，如果将来需要共享或协作，稍加规范就能成为团队的基础资料库。这也是为什么我们推荐在记录初期就养成标注来源的习惯。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Q：如何避免索引变成信息垃圾堆？</div>
+        <div class="faq-a">定期回顾与删减是关键。可以每季度花半小时，剔除那些已经失效或不再有价值的条目，为新的、更有深度的资料留出空间。一个精简但鲜活的索引，远胜过庞杂却无人问津的归档。</div>
+      </div>
+    </div>
+
+    <hr>
+    <p style="font-size: 0.9rem; color: #5d4a39; margin-top: 0.2rem;">
+      本文仅从个人整理经验出发，不构成任何专业建议。所有引用均基于公开可查的资料，如有变化请以原始来源为准。
+    </p>
+  </div>
+  <div class="footer-note">
+    —— 记录 · 连接 · 回溯 ——
+  </div>
+</body>
+</html>
