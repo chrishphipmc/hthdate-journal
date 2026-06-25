@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>再次回到 <a href="https://hthdate.com.cn" style="color:inherit;text-decoration:none;">华体会</a> · 知识库入口</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f4f9fc;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            color: #1f2e3c;
+            line-height: 1.6;
+            padding: 1.5rem;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* header / 再次访问提示 */
+        .revisit-note {
+            background: #d9eef5;
+            border-left: 6px solid #2b7a78;
+            border-radius: 14px;
+            padding: 1.8rem 2rem;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 6px 12px rgba(43, 122, 120, 0.08);
+        }
+
+        .revisit-note h1 {
+            font-size: 1.9rem;
+            font-weight: 550;
+            color: #0d4f4d;
+            letter-spacing: 0.01em;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            flex-wrap: wrap;
+        }
+
+        .revisit-note h1 small {
+            font-size: 1rem;
+            font-weight: 400;
+            color: #2f5f5d;
+            background: #edf7fa;
+            padding: 0.2rem 0.8rem;
+            border-radius: 30px;
+            margin-left: 0.5rem;
+        }
+
+        .revisit-note p {
+            margin-top: 0.7rem;
+            font-size: 1rem;
+            color: #1e4b4a;
+        }
+
+        .revisit-note .bookmark-tip {
+            background: #ffffffbb;
+            display: inline-block;
+            padding: 0.2rem 1rem;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            margin-top: 0.6rem;
+            border: 1px solid #7bc1c0;
+            color: #1e5c5a;
+        }
+
+        /* 目录网格 — 知识库卡片 */
+        .knowledge-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.8rem;
+            margin-bottom: 3rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 1.6rem 1.4rem;
+            box-shadow: 0 6px 18px rgba(0, 40, 40, 0.05);
+            transition: transform 0.2s ease, box-shadow 0.25s;
+            border: 1px solid #e2f0f0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 14px 28px rgba(43, 122, 120, 0.12);
+            border-color: #9ed4d2;
+        }
+
+        .card-icon {
+            font-size: 1.9rem;
+            margin-bottom: 0.8rem;
+            color: #2b7a78;
+        }
+
+        .card h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #10403e;
+            margin-bottom: 0.5rem;
+        }
+
+        .card p {
+            font-size: 0.94rem;
+            color: #2f4a49;
+            flex: 1;
+            margin-bottom: 1.2rem;
+        }
+
+        .card .meta-tag {
+            font-size: 0.75rem;
+            color: #3b7a78;
+            background: #e5f5f3;
+            padding: 0.2rem 0.8rem;
+            border-radius: 30px;
+            display: inline-block;
+            align-self: flex-start;
+            margin-top: auto;
+        }
+
+        /* 说明区 + 相关信息结合 */
+        .info-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-bottom: 2.8rem;
+        }
+
+        .guide-block {
+            flex: 2;
+            min-width: 260px;
+            background: #ffffffdb;
+            backdrop-filter: blur(2px);
+            padding: 2rem 2rem 2.2rem;
+            border-radius: 28px;
+            box-shadow: 0 4px 12px rgba(0, 77, 77, 0.04);
+            border: 1px solid #d9eef0;
+        }
+
+        .guide-block h2 {
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: #185c5a;
+            border-bottom: 2px dashed #b6dbda;
+            padding-bottom: 0.6rem;
+            margin-bottom: 1.3rem;
+        }
+
+        .guide-block p {
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .guide-block strong {
+            color: #1e6d6a;
+        }
+
+        .faq-mini {
+            flex: 1.2;
+            min-width: 220px;
+            background: #e8f4f2;
+            border-radius: 28px;
+            padding: 1.8rem 1.8rem 2rem;
+            border: 1px solid #c3e0de;
+        }
+
+        .faq-mini h3 {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: #0b5350;
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .faq-item {
+            margin-bottom: 1.2rem;
+        }
+
+        .faq-item .q {
+            font-weight: 600;
+            color: #1b5b58;
+            display: block;
+            margin-bottom: 0.25rem;
+            font-size: 0.95rem;
+        }
+
+        .faq-item .a {
+            font-size: 0.9rem;
+            color: #255e5c;
+            background: #f4fcfb;
+            padding: 0.3rem 0.9rem;
+            border-radius: 50px;
+            display: inline-block;
+        }
+
+        /* 提示区 — 收藏与持续关注 */
+        .notice-zone {
+            background: white;
+            border-radius: 30px;
+            padding: 2rem 2.2rem;
+            margin-bottom: 2.6rem;
+            border: 1px solid #cfe9e8;
+            box-shadow: 0 2px 10px rgba(43, 122, 120, 0.04);
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+        }
+
+        .notice-text {
+            flex: 2;
+            min-width: 200px;
+        }
+
+        .notice-text h4 {
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: #175957;
+            margin-bottom: 0.4rem;
+        }
+
+        .notice-text p {
+            color: #2b5b59;
+            font-size: 0.98rem;
+        }
+
+        .notice-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-outline {
+            display: inline-block;
+            border: 1.5px solid #2b7a78;
+            background: transparent;
+            padding: 0.5rem 1.6rem;
+            border-radius: 60px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #1a5c5a;
+            transition: 0.2s;
+            cursor: default;
+        }
+
+        .btn-outline:hover {
+            background: #e3f4f2;
+            border-color: #1f6b68;
+        }
+
+        .btn-solid {
+            display: inline-block;
+            background: #2b7a78;
+            padding: 0.5rem 1.8rem;
+            border-radius: 60px;
+            color: white;
+            font-weight: 500;
+            font-size: 0.9rem;
+            border: none;
+            transition: 0.2s;
+            text-decoration: none;
+        }
+
+        .btn-solid:hover {
+            background: #1b605e;
+            transform: scale(0.97);
+        }
+
+        /* 相关信息区 — 链接与资源 */
+        .related-box {
+            background: #dff0ef;
+            border-radius: 26px;
+            padding: 1.8rem 2.2rem;
+            margin-bottom: 2.5rem;
+            border: 1px solid #b7dbd9;
+        }
+
+        .related-box h5 {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #0b514f;
+            margin-bottom: 1rem;
+            letter-spacing: 0.3px;
+        }
+
+        .related-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem 1.8rem;
+            list-style: none;
+        }
+
+        .related-links li {
+            font-size: 0.95rem;
+        }
+
+        .related-links a {
+            color: #195f5c;
+            text-decoration: none;
+            border-bottom: 1px dotted #6faeac;
+            transition: 0.2s;
+        }
+
+        .related-links a:hover {
+            border-bottom: 2px solid #1a6b68;
+            color: #0c4a47;
+        }
+
+        /* 页脚 */
+        .footer-note {
+            text-align: center;
+            font-size: 0.85rem;
+            color: #527d7b;
+            padding-top: 1.5rem;
+            border-top: 1px solid #cde1e0;
+            margin-top: 1rem;
+        }
+
+        /* 响应式微调 */
+        @media (max-width: 600px) {
+            body { padding: 1rem; }
+            .revisit-note { padding: 1.4rem; }
+            .revisit-note h1 { font-size: 1.5rem; }
+            .card { padding: 1.2rem; }
+            .notice-zone { flex-direction: column; align-items: stretch; }
+        }
+
+        /* 自然嵌入的链接样式（与卡片内文本区隔） */
+        .inline-link {
+            color: #236b68;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            text-decoration-thickness: 1px;
+            text-decoration-color: #7ebdba;
+            font-weight: 500;
+        }
+        .inline-link:hover {
+            color: #0b4e4b;
+            text-decoration-color: #0b5f5c;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <!-- 再次访问区 + 收藏提示 -->
+    <div class="revisit-note">
+        <h1>
+            📖 再次回到这里
+            <small>收藏夹·常来常新</small>
+        </h1>
+        <p>无论第几次打开，<a href="https://hthdate.com.cn" class="inline-link">华体会</a> 都希望成为你手边一个温和的知识落脚点。内容会逐步沉淀，目录结构也会随关注点慢慢生长——就像书架上那本常翻常新的册子。</p>
+        <span class="bookmark-tip">⭐ 浏览器书签 + 手机主屏幕均可保存</span>
+    </div>
+
+    <!-- 网格卡片 · 目录感布局 -->
+    <div class="knowledge-grid">
+        <div class="card">
+            <div class="card-icon">📂</div>
+            <h3>常见主题</h3>
+            <p>日常使用中反复出现的问题、简短说明与参考思路，按场景归类。</p>
+            <span class="meta-tag">持续整理</span>
+        </div>
+        <div class="card">
+            <div class="card-icon">📘</div>
+            <h3>背景与笔记</h3>
+            <p>围绕平台功能、社区习惯以及版本变动的简要笔记，更适合静下来阅读。</p>
+            <span class="meta-tag">深度内容</span>
+        </div>
+        <div class="card">
+            <div class="card-icon">🔖</div>
+            <h3>收藏索引</h3>
+            <p>把零散信息编成可检索的卡片库，方便你在需要时快速定位。</p>
+            <span class="meta-tag">索引结构</span>
+        </div>
+        <div class="card">
+            <div class="card-icon">🧭</div>
+            <h3>更新动态</h3>
+            <p>页面迭代、新模块加入或调整方向时，会在这里留下标记。</p>
+            <span class="meta-tag">关注变化</span>
+        </div>
+    </div>
+
+    <!-- 说明区 + FAQ 摘要 -->
+    <div class="info-section">
+        <div class="guide-block">
+            <h2>🔍 从「再次访问」开始</h2>
+            <p>一个知识库的入口不需要太复杂，但值得被反复使用。<strong>收藏</strong>和<strong>持续关注</strong>正是让信息沉淀的两种习惯。这里没有浮夸的推送，只有当你想起时，可以翻出来看看的整理。</p>
+            <p>网站目前围绕 <a href="https://hthdate.com.cn" class="inline-link">华体会</a> 搭建内容骨架，卡片目录会逐步补充。如果你刚刚发现这里，不妨把页面加入书签，隔段时间回来，或许会看到新的分类或更细的说明。</p>
+            <p>所有文字都力求平实、克制，不制造焦虑，也不滥用感叹——只是安静地存在，等待被需要的人打开。</p>
+        </div>
+        <div class="faq-mini">
+            <h3>❓ 简要 FAQ</h3>
+            <div class="faq-item">
+                <span class="q">页面会经常变吗？</span>
+                <span class="a">结构相对稳定，内容按节奏补充</span>
+            </div>
+            <div class="faq-item">
+                <span class="q">我能保存喜欢的卡片吗？</span>
+                <span class="a">浏览器书签、笔记工具都适用</span>
+            </div>
+            <div class="faq-item">
+                <span class="q">有订阅或更新提醒？</span>
+                <span class="a">暂时没有，但页面本身会保留动态标记</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 提示区 · 收藏与持续关注 -->
+    <div class="notice-zone">
+        <div class="notice-text">
+            <h4>📌 保持关注的简单方式</h4>
+            <p>不需要注册账号或留下邮箱。在浏览器里收藏这个页面，或者把 <a href="https://hthdate.com.cn" class="inline-link">华体会</a> 添加到手机主屏幕——下次打开时，它会和上次一样安静，但内容可能已经悄悄更新了一点。</p>
+        </div>
+        <div class="notice-actions">
+            <span class="btn-outline">📑 添加到书签</span>
+            <span class="btn-solid">📱 主屏幕保存</span>
+        </div>
+    </div>
+
+    <!-- 相关信息区 -->
+    <div class="related-box">
+        <h5>📎 相关信息</h5>
+        <ul class="related-links">
+            <li>🔗 <a href="https://hthdate.com.cn">华体会</a></li>
+            <li>📋 知识库索引（稳定入口）</li>
+            <li>📮 反馈建议 · 暂未开放</li>
+            <li>🕒 最后内容整理：近期</li>
+        </ul>
+        <p style="margin-top: 1rem; font-size: 0.9rem; color: #2c605e;">再次访问时，不妨从任意一张卡片读起。没有固定路线，只有持续积累的安静角落。</p>
+    </div>
+
+    <!-- 页脚 -->
+    <div class="footer-note">
+        <a href="https://hthdate.com.cn" style="color: #2b7a78; text-decoration: none;">华体会</a> · 知识库风格入口 · 持续关注，温和生长
+    </div>
+
+</div>
+</body>
+</html>
